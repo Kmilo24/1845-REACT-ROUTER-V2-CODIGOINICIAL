@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react"
 import "../assets/css/componentes/card.css"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { buscar } from "../api/api"
 const Post = ({url}) => {
     const [post, setPost] = useState({})
     const {id} = useParams()
+    const navigate = useNavigate()
     useEffect(() => {
-        buscar(`/posts/${id}`, setPost)
+        buscar(`/posts/${id}`, setPost).catch(() => {
+            navigate("/not-found")
+        })
         
     }, [id])
     return(
